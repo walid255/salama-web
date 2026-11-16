@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import ContentImage from '../components/ContentImage';
 import {
   Download,
   ChevronLeft,
@@ -17,12 +18,13 @@ import {
 } from 'lucide-react';
 
 export default function CompanyProfilePage() {
-  const { copyToClipboard } = useApp();
+  const { copyToClipboard, siteContent } = useApp();
   const [currentSlide, setCurrentSlide] = useState(1);
   const [viewMode, setViewMode] = useState('carousel'); // carousel | grid
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   const totalSlides = 24;
+  const slideImageUrls = siteContent.companyProfilePage?.slideImageUrls || [];
 
   const slideTitles = [
     'Empowering Choices for Healthier Life',
@@ -58,8 +60,6 @@ export default function CompanyProfilePage() {
   const handleNext = () => {
     setCurrentSlide((prev) => (prev < totalSlides ? prev + 1 : 1));
   };
-
-  const currentSlidePadded = String(currentSlide).padStart(2, '0');
 
   return (
     <div className="space-y-12 pb-20">
@@ -152,13 +152,11 @@ export default function CompanyProfilePage() {
             
             {/* Active Slide Image */}
             <div className="relative w-full aspect-[16/11] max-h-[640px] flex items-center justify-center bg-black/90">
-              <img
-                src={`/assets/slides/slide-${currentSlidePadded}.webp`}
+              <ContentImage
+                src={slideImageUrls[currentSlide - 1]}
                 alt={`Salama Pharmaceuticals Presentation - Slide ${currentSlide}: ${slideTitles[currentSlide - 1]}`}
                 className="max-h-full max-w-full object-contain"
-                onError={(e) => {
-                  e.currentTarget.src = `/assets/slides/slide-${currentSlidePadded}.jpg`;
-                }}
+                placeholderClass="w-full h-full"
               />
 
               {/* Prev / Next overlay buttons */}
@@ -229,7 +227,6 @@ export default function CompanyProfilePage() {
             <div className="w-full bg-slate-950 px-4 py-3 overflow-x-auto flex items-center gap-2 border-t border-slate-800/80">
               {Array.from({ length: totalSlides }).map((_, i) => {
                 const sNum = i + 1;
-                const sPad = String(sNum).padStart(2, '0');
                 const isSelected = sNum === currentSlide;
                 return (
                   <button
@@ -241,11 +238,12 @@ export default function CompanyProfilePage() {
                         : 'border-slate-800 opacity-60 hover:opacity-100'
                     }`}
                   >
-                    <img
-                      src={`/assets/slides/slide-${sPad}.webp`}
+                    <ContentImage
+                      src={slideImageUrls[i]}
                       alt={`Slide ${sNum}`}
                       className="w-full h-full object-cover"
-                      loading="lazy"
+                      placeholderClass="w-full h-full"
+                      compact
                     />
                     <span className="absolute bottom-0 right-0 px-1 text-[9px] bg-black/80 text-white font-mono rounded-tl">
                       {sNum}
@@ -261,7 +259,6 @@ export default function CompanyProfilePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: totalSlides }).map((_, i) => {
               const sNum = i + 1;
-              const sPad = String(sNum).padStart(2, '0');
               return (
                 <div
                   key={sNum}
@@ -272,11 +269,12 @@ export default function CompanyProfilePage() {
                   className="group cursor-pointer rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-salama-orange overflow-hidden shadow-sm hover:shadow-xl transition-all"
                 >
                   <div className="relative aspect-[16/11] bg-slate-950 overflow-hidden">
-                    <img
-                      src={`/assets/slides/slide-${sPad}.webp`}
+                    <ContentImage
+                      src={slideImageUrls[i]}
                       alt={slideTitles[i]}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
+                      placeholderClass="w-full aspect-[16/11]"
+                      compact
                     />
                     <span className="absolute top-3 left-3 px-2 py-0.5 rounded bg-black/70 text-white text-xs font-mono">
                       #{sNum}

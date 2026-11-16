@@ -13,7 +13,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Injection',
     strength: '1000 mg (1g) Vial',
     tmdaRegNo: 'TMDA-TZ-MED-04821',
-    image: '/assets/products/alcef-sb-and-alcef.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Empiric therapy backbone in hospitals due to broad spectrum + safety.',
     indications: [
@@ -38,7 +38,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Injection',
     strength: '1.5 g (1000mg + 500mg)',
     tmdaRegNo: 'TMDA-TZ-MED-04822',
-    image: '/assets/products/alcef-sb-and-alcef.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Extended Spectrum β-lactamase (ESBL) producing Gram-negative bacilli; carbapenem-sparing option.',
     indications: [
@@ -63,7 +63,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '625 mg (500mg Amoxicillin + 125mg Clavulanate)',
     tmdaRegNo: 'TMDA-TZ-MED-03914',
-    image: '/assets/products/alphaclav-ds-and-625.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Oral alternative to IV therapy in moderate infections allowing outpatient management.',
     indications: [
@@ -88,7 +88,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Oral Suspension',
     strength: '228.5 mg / 5 mL (Dry Powder)',
     tmdaRegNo: 'TMDA-TZ-MED-03915',
-    image: '/assets/products/alphaclav-ds-and-625.webp',
+    image: '',
     isFeatured: false,
     keyHighlight: 'Pediatric high-compliance suspension for resistant childhood infections.',
     indications: [
@@ -113,7 +113,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Eye Drops',
     strength: '0.005% (50 mcg/mL)',
     tmdaRegNo: 'TMDA-TZ-MED-05118',
-    image: '/assets/products/glauconil.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Once-daily prostaglandin analog reducing IOP by 25–35% via uveoscleral outflow.',
     indications: [
@@ -138,7 +138,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '400 mg',
     tmdaRegNo: 'TMDA-TZ-MED-04229',
-    image: '/assets/products/fixim-400.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'First-line oral cephalosporin in Tanzania and step-down option after hospital ceftriaxone.',
     indications: [
@@ -163,7 +163,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '150 mg',
     tmdaRegNo: 'TMDA-TZ-MED-03774',
-    image: '/assets/products/flucoz-150.webp',
+    image: '',
     isFeatured: false,
     keyHighlight: 'Gold standard systemic antifungal with high oral bioavailability and deep tissue penetration.',
     indications: [
@@ -188,7 +188,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Sustained Release Tablets',
     strength: '2 mg Glimepiride + 500 mg Metformin SR',
     tmdaRegNo: 'TMDA-TZ-MED-05341',
-    image: '/assets/products/glimmet-2.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Fixed-dose dual-action oral therapy for T2DM inadequately controlled on monotherapy.',
     indications: [
@@ -213,7 +213,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '50 mg',
     tmdaRegNo: 'TMDA-TZ-MED-04981',
-    image: '/assets/products/costan-50.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Preferred first-line for hypertensive diabetics & CKD patients; proven CV, stroke & renal protection.',
     indications: [
@@ -238,7 +238,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '50 mg / 12.5 mg',
     tmdaRegNo: 'TMDA-TZ-MED-04982',
-    image: '/assets/products/costan-h.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Synergistic BP reduction in uncontrolled hypertension with potassium-sparing renal protection.',
     indications: [
@@ -263,7 +263,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Tablets',
     strength: '15 mg',
     tmdaRegNo: 'TMDA-TZ-MED-03612',
-    image: '/assets/products/melkam-15.webp',
+    image: '',
     isFeatured: false,
     keyHighlight: 'Selective preferential COX-2 inhibitor with reduced gastric side effects for chronic pain & OA.',
     indications: [
@@ -288,7 +288,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Topical Gel',
     strength: '30 g Gel Tube',
     tmdaRegNo: 'TMDA-TZ-MED-05201',
-    image: '/assets/products/muscoleve.webp',
+    image: '',
     isFeatured: true,
     keyHighlight: 'Triple-action anti-inflammatory, counterirritant, and rubefacient for fast localized relief.',
     indications: [
@@ -313,7 +313,7 @@ export const INITIAL_PRODUCTS = [
     dosageForm: 'Topical Gel',
     strength: '2.5% w/w (30 g Tube)',
     tmdaRegNo: 'TMDA-TZ-MED-05202',
-    image: '/assets/products/ketomusc-25.webp',
+    image: '',
     isFeatured: false,
     keyHighlight: 'Direct targeted anti-inflammatory action at the site of pain, minimizing systemic exposure.',
     indications: [
@@ -338,7 +338,8 @@ export const INITIAL_ZONES = [
     address: 'Plot 45/47, Nyerere Road Industrial Area, P.O. Box 71822, Dar es Salaam, Tanzania',
     phone: '+255 22 286 4500 / +255 754 000 111',
     email: 'coast@salama.co.tz',
-    coordinates: { lat: -6.7924, lng: 39.2083 },
+    coordinates: { lat: -6.852255593146081, lng: 39.224117574995454 },
+    mapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.3194746712384!2d39.224117574995454!3d-6.852255593146081!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4ba96c1eb7e3%3A0x19847ee7dd486067!2sSalama%20Pharmaceuticals%20Limited!5e0!3m2!1sen!2stz!4v1794819000704!5m2!1sen!2stz',
     warehouseCapacity: '25,000 sq ft Cold-Chain & Climate Controlled GDP Hub',
     isHeadquarters: true
   },
@@ -442,6 +443,56 @@ export const INITIAL_SITE_CONTENT = {
     secondaryCtaLink: '/about/profile',
     badge: '40+ Years of Trusted Pharmaceutical Service in Tanzania'
   },
+  homePage: {
+    heroSupportHeading: 'With Deep Roots in Tanzania',
+    heroImageUrl: '',
+    heroImageAlt: 'Salama Pharmaceutical doctors shaping the future of pharma in Tanzania',
+    manifestoImageUrl: '',
+    partnersImageUrl: '',
+    distributionImageUrl: ''
+  },
+  aboutPage: {
+    headline: 'With Deep Roots in Tanzania, We’re Shaping the Future of Pharma',
+    intro: 'For four decades, Salama has been a steadfast healthcare partner across Tanzania. Built on trust, enduring relationships, and a mission to empower doctors and serve communities.',
+    storyHeading: 'A History of Trust, Clinical Commitment and Patient Focus',
+    storyParagraphs: [
+      'Founded four decades ago, Salama Pharmaceuticals began with a singular focus: ensuring that essential, high-quality medications were reliably accessible to the people of Tanzania. Over the years, that commitment has evolved into a comprehensive healthcare enterprise.',
+      'Today, Salama serves as an indispensable bridge between world-class pharmaceutical manufacturing and the everyday clinical needs of Tanzanian doctors, nurses, and patients. We work alongside the Ministry of Health, the Medical Stores Department (MSD), faith-based mission facilities, and the private healthcare sector to eliminate medicine stock-outs.',
+      'Our portfolio encompasses over 100 registered molecules approved by the Tanzania Medicines and Medical Devices Authority (TMDA), spanning lifesaving antibiotics, cardiovascular agents, diabetes therapies, ophthalmic solutions, and topical analgesics.'
+    ],
+    storyImageUrl: '',
+    storyImageAlt: 'Salama clinical doctor with stethoscope',
+    clinicalFreedomImageUrl: '',
+    clinicalEducationImageUrl: '',
+    visionImageUrl: '',
+    values: [
+      { title: 'Patients First', description: 'Every commercial decision is evaluated by one metric: does it improve patient outcomes and alleviate suffering in our community?' },
+      { title: 'Clinical Autonomy', description: 'We believe doctors must have the freedom to choose the right drug, for the right patient, at the right time, without artificial market barriers.' },
+      { title: 'Uncompromising Quality', description: 'WHO-GMP compliance, rigorous batch analysis, TMDA validation, and climate-controlled GDP transport without exception.' }
+    ],
+    visionHeading: 'Where We’re Headed: “We’re just getting started.”',
+    visionPoints: [
+      'Expanding Therapeutic Coverage: Broadening oncology, critical care, and pediatric formulations.',
+      'Investing in New Molecules: Introducing modern therapies that address tomorrow’s clinical challenges.',
+      'Strengthening National Supply Chains: Upgrading digital warehousing and faster cold-chain logistics across all 5 zones.',
+      'Deepening Healthcare Partnerships: Working alongside clinicians, hospitals, and national health authorities.'
+    ]
+  },
+  companyProfilePage: {
+    slideImageUrls: Array(24).fill('')
+  },
+  catalogPage: {
+    title: 'Pharmaceutical Catalog & Molecule Directory',
+    description: 'Every molecule is registered with TMDA, manufactured under WHO-GMP compliance, and stocked across our 5 nationwide zonal distribution centers.'
+  },
+  contactsPage: {
+    title: 'Contacts & Zonal Distribution Network',
+    description: 'Reach our central corporate headquarters in Dar es Salaam or connect directly with our regional dispatch depots across Tanzania.'
+  },
+  faqPage: {
+    title: 'Frequently Asked Questions',
+    description: 'Find immediate answers regarding TMDA molecule registration, MSD partnership, Good Distribution Practice (GDP) cold chain, and institutional order procedures.'
+  },
   stats: [
     { label: 'Years of Trusted Service', value: '40+', suffix: 'Years in Tanzania' },
     { label: 'TMDA Approved Molecules', value: '100+', suffix: 'Registered & Aligned' },
@@ -498,6 +549,7 @@ export const INITIAL_SITE_CONTENT = {
     centralEmail: 'info@salama.co.tz',
     supportPhone: '+255 22 286 4500',
     emergencyHotline: '+255 754 000 999',
+    safetyEmail: 'safety@salama.co.tz',
     workingHours: 'Monday – Friday: 08:00 – 17:00 | Saturday: 08:30 – 13:00 EAT'
   },
   googleSearchConsole: {

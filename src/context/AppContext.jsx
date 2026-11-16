@@ -110,7 +110,20 @@ export function AppProvider({ children }) {
   const [siteContent, setSiteContent] = useState(() => {
     try {
       const saved = localStorage.getItem('salama_cms_content_v1');
-      return saved ? JSON.parse(saved) : INITIAL_SITE_CONTENT;
+      if (!saved) return INITIAL_SITE_CONTENT;
+      const savedContent = JSON.parse(saved);
+      return {
+        ...INITIAL_SITE_CONTENT,
+        ...savedContent,
+        hero: { ...INITIAL_SITE_CONTENT.hero, ...savedContent.hero },
+        homePage: { ...INITIAL_SITE_CONTENT.homePage, ...savedContent.homePage },
+        aboutPage: { ...INITIAL_SITE_CONTENT.aboutPage, ...savedContent.aboutPage },
+        companyProfilePage: { ...INITIAL_SITE_CONTENT.companyProfilePage, ...savedContent.companyProfilePage },
+        catalogPage: { ...INITIAL_SITE_CONTENT.catalogPage, ...savedContent.catalogPage },
+        contactsPage: { ...INITIAL_SITE_CONTENT.contactsPage, ...savedContent.contactsPage },
+        faqPage: { ...INITIAL_SITE_CONTENT.faqPage, ...savedContent.faqPage },
+        contactInfo: { ...INITIAL_SITE_CONTENT.contactInfo, ...savedContent.contactInfo }
+      };
     } catch {
       return INITIAL_SITE_CONTENT;
     }
@@ -128,7 +141,17 @@ export function AppProvider({ children }) {
   const [zones, setZones] = useState(() => {
     try {
       const saved = localStorage.getItem('salama_cms_zones_v1');
-      return saved ? JSON.parse(saved) : INITIAL_ZONES;
+      if (!saved) return INITIAL_ZONES;
+      return JSON.parse(saved).map((zone) => {
+        const defaults = INITIAL_ZONES.find((initialZone) => initialZone.id === zone.id);
+        const isLegacyHeadquartersLocation = zone.id === 'zone-dar'
+          && zone.coordinates?.lat === -6.7924
+          && zone.coordinates?.lng === 39.2083;
+        const savedZone = isLegacyHeadquartersLocation
+          ? { ...zone, coordinates: defaults?.coordinates }
+          : zone;
+        return defaults ? { ...defaults, ...savedZone } : zone;
+      });
     } catch {
       return INITIAL_ZONES;
     }

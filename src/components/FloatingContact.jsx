@@ -7,6 +7,7 @@ export default function FloatingContact() {
   const [isOpen, setIsOpen] = useState(false);
 
   const whatsappNumber = siteContent?.socialLinks?.whatsapp?.replace(/[^0-9]/g, '') || '255754000111';
+  const supportPhone = siteContent?.contactInfo?.supportPhone || '+255 22 286 4500';
   const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
     'Hello Salama Pharmaceuticals Tanzania, I would like to inquire about pharmaceutical supply & clinical molecules.'
   )}`;
@@ -50,7 +51,7 @@ export default function FloatingContact() {
             </a>
 
             <a
-              href="tel:+255222864500"
+              href={`tel:${supportPhone.replace(/[^\d+]/g, '')}`}
               className="flex items-center gap-3 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors text-xs font-semibold"
             >
               <div className="w-8 h-8 rounded-lg bg-salama-teal text-white flex items-center justify-center flex-shrink-0">
@@ -58,7 +59,7 @@ export default function FloatingContact() {
               </div>
               <div>
                 <p className="font-bold">Call Central Switchboard</p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">+255 22 286 4500</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">{supportPhone}</p>
               </div>
             </a>
 

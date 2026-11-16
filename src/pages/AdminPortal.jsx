@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import AdminSiteManager from './AdminSiteManager';
+import ContentImage from '../components/ContentImage';
 import {
   Lock,
   Eye,
@@ -73,7 +75,7 @@ export default function AdminPortal() {
     dosageForm: 'Tablets',
     strength: '',
     tmdaRegNo: '',
-    image: '/assets/products/alcef-sb-and-alcef.webp',
+    image: '',
     isFeatured: false,
     keyHighlight: '',
     indications: [''],
@@ -89,9 +91,6 @@ export default function AdminPortal() {
 
   // Social Links Form
   const [socialForm, setSocialForm] = useState({ ...siteContent.socialLinks });
-
-  // Hero Content Form
-  const [heroForm, setHeroForm] = useState({ ...siteContent.hero });
 
   // Google Search Console Form
   const [gscMeta, setGscMeta] = useState(siteContent.googleSearchConsole?.verificationMeta || '');
@@ -159,7 +158,7 @@ export default function AdminPortal() {
       dosageForm: 'Tablets',
       strength: '500 mg',
       tmdaRegNo: 'TMDA-TZ-MED-0' + Math.floor(1000 + Math.random() * 9000),
-      image: '/assets/products/alcef-sb-and-alcef.webp',
+      image: '',
       isFeatured: false,
       keyHighlight: 'First-line registered molecule for Tanzanian healthcare facilities.',
       indications: ['Primary clinical indication compliant with Tanzania STG'],
@@ -179,16 +178,6 @@ export default function AdminPortal() {
         addToast(`Deleted ${prod.name} from catalog.`, 'info');
       }
     });
-  };
-
-  // Save Hero Content
-  const handleSaveHero = (e) => {
-    e.preventDefault();
-    setSiteContent((prev) => ({
-      ...prev,
-      hero: { ...heroForm }
-    }));
-    addToast('Hero section content updated and saved!', 'success');
   };
 
   // Save Social Links
@@ -427,7 +416,7 @@ export default function AdminPortal() {
         <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-slate-200 dark:border-slate-800 text-xs font-bold">
           {[
             { id: 'products', label: `Manage Products (${products.length})`, icon: Pill },
-            { id: 'content', label: 'Home & Hero Content', icon: FileText },
+            { id: 'content', label: 'Manage Site Pages', icon: FileText },
             { id: 'social', label: 'Social Networks & Channels', icon: Share2 },
             { id: 'cloudflare', label: 'Cloudflare Cache Purge', icon: CloudLightning },
             { id: 'users', label: 'RBAC Access & Roles', icon: ShieldCheck },
@@ -541,34 +530,24 @@ export default function AdminPortal() {
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                   <div>
                     <label className="block text-xs font-semibold mb-1">Therapeutic Category</label>
-                    <select
+                    <input
+                      type="text"
                       value={productForm.category}
                       onChange={(e) => setProductForm({ ...productForm, category: e.target.value })}
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                    >
-                      <option>Antibiotics & Infectious Diseases</option>
-                      <option>Cardiovascular & Renal</option>
-                      <option>Diabetes & Endocrinology</option>
-                      <option>Pain & Anti-inflammatory</option>
-                      <option>Ophthalmology</option>
-                      <option>Antifungals</option>
-                    </select>
+                      placeholder="e.g. Cardiovascular & Renal"
+                    />
                   </div>
 
                   <div>
                     <label className="block text-xs font-semibold mb-1">Dosage Form</label>
-                    <select
+                    <input
+                      type="text"
                       value={productForm.dosageForm}
                       onChange={(e) => setProductForm({ ...productForm, dosageForm: e.target.value })}
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                    >
-                      <option>Tablets</option>
-                      <option>Injection</option>
-                      <option>Oral Suspension</option>
-                      <option>Eye Drops</option>
-                      <option>Topical Gel</option>
-                      <option>Sustained Release Tablets</option>
-                    </select>
+                      placeholder="e.g. Tablets"
+                    />
                   </div>
 
                   <div>
@@ -585,10 +564,10 @@ export default function AdminPortal() {
                   <div>
                     <label className="block text-xs font-semibold mb-1">Image URL / Asset</label>
                     <input
-                      type="text"
+                      type="url"
                       value={productForm.image}
                       onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                      placeholder="/assets/products/alcef-sb-and-alcef.webp"
+                      placeholder="https://example.com/product-image.jpg"
                       className="w-full px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
                     />
                   </div>
@@ -675,10 +654,12 @@ export default function AdminPortal() {
                     <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                       <td className="p-4 font-semibold text-slate-900 dark:text-white">
                         <div className="flex items-center gap-3">
-                          <img
+                          <ContentImage
                             src={p.image}
                             alt=""
                             className="w-10 h-10 object-contain rounded-lg bg-slate-100 dark:bg-slate-800 p-1"
+                            placeholderClass="w-10 h-10 rounded-lg"
+                            compact
                           />
                           <div>
                             <p className="font-bold">{p.name}</p>
@@ -731,83 +712,7 @@ export default function AdminPortal() {
         </section>
       )}
 
-      {/* Tab 2: Home & Hero Content */}
-      {activeTab === 'content' && (
-        <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-          <div className="rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-8 shadow-sm space-y-6">
-            <div>
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">
-                Edit Homepage Hero & Tagline
-              </h2>
-              <p className="text-xs text-slate-500">
-                Update the primary message displayed to Tanzanian doctors and healthcare institutions.
-              </p>
-            </div>
-
-            <form onSubmit={handleSaveHero} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold mb-1">Heritage Badge</label>
-                <input
-                  type="text"
-                  value={heroForm.badge}
-                  onChange={(e) => setHeroForm({ ...heroForm, badge: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold mb-1">Primary Headline</label>
-                <input
-                  type="text"
-                  value={heroForm.headline}
-                  onChange={(e) => setHeroForm({ ...heroForm, headline: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-bold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold mb-1">Subheadline Description</label>
-                <textarea
-                  rows={3}
-                  value={heroForm.subheadline}
-                  onChange={(e) => setHeroForm({ ...heroForm, subheadline: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold mb-1">Primary CTA Button Label</label>
-                  <input
-                    type="text"
-                    value={heroForm.primaryCtaText}
-                    onChange={(e) => setHeroForm({ ...heroForm, primaryCtaText: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold mb-1">Secondary CTA Button Label</label>
-                  <input
-                    type="text"
-                    value={heroForm.secondaryCtaText}
-                    onChange={(e) => setHeroForm({ ...heroForm, secondaryCtaText: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs"
-                  />
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <button
-                  type="submit"
-                  className="px-6 py-2.5 rounded-xl bg-salama-teal text-white text-xs font-bold uppercase tracking-wider"
-                >
-                  Save Homepage Content
-                </button>
-              </div>
-            </form>
-          </div>
-        </section>
-      )}
+      {activeTab === 'content' && <AdminSiteManager />}
 
       {/* Tab 3: Social Networks & Channels */}
       {activeTab === 'social' && (

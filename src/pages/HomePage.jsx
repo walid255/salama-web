@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import ContentImage from '../components/ContentImage';
 import {
   ShieldCheck,
   Stethoscope,
@@ -25,6 +26,7 @@ export default function HomePage() {
   const stats = siteContent.stats || [];
   const pillars = siteContent.pillars || [];
   const doctorMission = siteContent.doctorMission || {};
+  const homePage = siteContent.homePage || {};
   const featuredProducts = products.filter((p) => p.isFeatured).slice(0, 6);
 
   return (
@@ -57,7 +59,7 @@ export default function HomePage() {
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white tracking-tight leading-[1.15]">
                 {hero.headline}
                 <span className="block text-salama-teal dark:text-salama-orange text-3xl sm:text-4xl lg:text-5xl font-extrabold mt-2">
-                  With Deep Roots in Tanzania
+                  {homePage.heroSupportHeading || 'With Deep Roots in Tanzania'}
                 </span>
               </h1>
 
@@ -109,15 +111,11 @@ export default function HomePage() {
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-tr from-salama-teal via-salama-orange to-amber-400 opacity-20 blur-2xl transform scale-95"></div>
 
                 <div className="relative rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-900 group">
-                  <img
-                    src="/assets/slides/slide-02.webp"
-                    alt="Salama Pharmaceutical Doctors shaping the future of pharma in Tanzania"
-                    width="1755"
-                    height="1241"
+                  <ContentImage
+                    src={homePage.heroImageUrl}
+                    alt={homePage.heroImageAlt || 'Salama Pharmaceutical doctors shaping the future of pharma in Tanzania'}
                     className="w-full h-auto object-cover transform transition-transform duration-700 group-hover:scale-105"
-                    onError={(e) => {
-                      e.currentTarget.src = '/assets/slides/slide-02.jpg';
-                    }}
+                    placeholderClass="w-full aspect-[1755/1241] rounded-3xl"
                   />
 
                   {/* Floating floating card badge */}
@@ -176,13 +174,11 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 items-center">
             
             <div className="lg:col-span-6 relative h-72 sm:h-96 lg:h-full min-h-[380px]">
-              <img
-                src="/assets/slides/slide-08.webp"
+              <ContentImage
+                src={homePage.manifestoImageUrl}
                 alt="Empowering Tanzanian clinicians to freely prescribe"
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = '/assets/slides/slide-08.jpg';
-                }}
+                placeholderClass="w-full h-full min-h-[380px]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent lg:hidden"></div>
               <div className="absolute bottom-4 left-4 right-4 text-white lg:hidden">
@@ -275,12 +271,11 @@ export default function HomePage() {
               <div>
                 {/* Product Image preview */}
                 <div className="relative w-full h-48 rounded-xl bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-800/50 dark:to-slate-800 flex items-center justify-center p-3 overflow-hidden">
-                  <img
+                  <ContentImage
                     src={product.image}
                     alt={product.name}
-                    width="400"
-                    height="300"
                     className="max-h-full max-w-full object-contain transform transition-transform duration-300 group-hover:scale-105"
+                    placeholderClass="h-full w-full rounded-xl"
                   />
                   <div className="absolute top-3 left-3">
                     <span className="px-2.5 py-1 rounded-md bg-salama-teal text-white text-[10px] font-bold tracking-wider uppercase">
@@ -420,15 +415,11 @@ export default function HomePage() {
 
           <div className="lg:col-span-6">
             <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl relative">
-              <img
-                src="/assets/slides/slide-06.webp"
-                alt="The Aga Khan Hospital Dar es Salaam - 1500+ healthcare facilities served across Tanzania"
-                width="1755"
-                height="1241"
+              <ContentImage
+                src={homePage.partnersImageUrl}
+                alt="Healthcare facilities served across Tanzania"
                 className="w-full h-auto object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = '/assets/slides/slide-06.jpg';
-                }}
+                placeholderClass="w-full aspect-[1755/1241]"
               />
               <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
                 <p className="text-xs font-bold uppercase tracking-wider text-salama-orange">
@@ -499,15 +490,11 @@ export default function HomePage() {
 
             <div className="lg:col-span-5">
               <div className="rounded-2xl overflow-hidden border border-slate-700 shadow-xl">
-                <img
-                  src="/assets/slides/slide-04.webp"
-                  alt="Salama Pharmaceutical cold-chain delivery fleet on highway across Tanzania"
-                  width="1755"
-                  height="1241"
+                <ContentImage
+                  src={homePage.distributionImageUrl}
+                  alt="Salama Pharmaceutical cold-chain delivery fleet"
                   className="w-full h-auto object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = '/assets/slides/slide-04.jpg';
-                  }}
+                  placeholderClass="w-full aspect-[1755/1241]"
                 />
               </div>
             </div>
