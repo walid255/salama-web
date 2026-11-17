@@ -11,12 +11,22 @@ import {
   ShieldAlert,
   CheckCircle2,
   ExternalLink,
-  Navigation,
-  Globe
 } from 'lucide-react';
+
+const isGoogleMapsEmbed = (value) => {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && url.hostname === 'www.google.com' && url.pathname === '/maps/embed';
+  } catch {
+    return false;
+  }
+};
 
 export default function ContactsPage() {
   const { zones, siteContent, addToast, showConfirm } = useApp();
+  const contactsPage = siteContent.contactsPage || {};
+  const contactInfo = siteContent.contactInfo || {};
+  const headquarters = zones.find((zone) => zone.isHeadquarters) || zones[0];
 
   const [activeZoneId, setActiveZoneId] = useState('zone-dar');
   const [formData, setFormData] = useState({
@@ -81,11 +91,10 @@ export default function ContactsPage() {
           </div>
           {/* Strictly 1 h1 tag on the page */}
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight max-w-3xl leading-tight">
-            Contacts & Zonal Distribution Network
+            {contactsPage.title || 'Contacts & Zonal Distribution Network'}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-emerald-100 max-w-2xl leading-relaxed">
-            Reach our central corporate headquarters in Dar es Salaam or connect directly with our regional dispatch
-            depots across Tanzania.
+            {contactsPage.description || 'Reach our central corporate headquarters in Dar es Salaam or connect directly with our regional dispatch depots across Tanzania.'}
           </p>
         </div>
       </section>
@@ -97,10 +106,10 @@ export default function ContactsPage() {
             Geographic Coverage
           </span>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
-            Interactive Tanzania Distribution Map
+            Branch Directions & Contacts
           </h2>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-            Click on any regional hub to view depot coordinates, warehouse capacity, and contact channels.
+            Select a branch to view its address, direct contact details, and map when available.
           </p>
         </div>
 
@@ -130,8 +139,48 @@ export default function ContactsPage() {
         {/* Map Container + Detail Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           
-          {/* Interactive Styled Map View (8 cols) */}
-          <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-slate-900 min-h-[420px] relative flex flex-col justify-between p-6">
+          <div className="lg:col-span-7 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 min-h-[360px] flex flex-col">
+            {isGoogleMapsEmbed(selectedZoneObj.mapEmbedUrl) ? (
+              <iframe
+                title={`${selectedZoneObj.hqCity} branch map`}
+                src={selectedZoneObj.mapEmbedUrl}
+                className="w-full flex-1 min-h-[360px] border-0"
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            ) : (
+              <div className="flex-1 min-h-[360px] flex flex-col items-center justify-center text-center p-8 bg-slate-50 dark:bg-slate-900">
+                <MapPin className="w-10 h-10 text-salama-orange mb-3" />
+                <h3 className="text-lg font-bold text-slate-900 dark:text-white">{selectedZoneObj.hqCity} map</h3>
+                <p className="max-w-sm text-sm text-slate-500 dark:text-slate-400 mt-2">
+                  A map for this branch can be added from the admin panel.
+                </p>
+              </div>
+            )}
+            <div className="p-4 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 text-xs">
+              <span className="font-semibold text-slate-600 dark:text-slate-300">
+                {selectedZoneObj.isHeadquarters ? 'Dar es Salaam Headquarters' : `${selectedZoneObj.hqCity} Branch`}
+              </span>
+              {selectedZoneObj.coordinates?.lat !== undefined &&
+                selectedZoneObj.coordinates.lat !== '' &&
+                selectedZoneObj.coordinates?.lng !== undefined &&
+                selectedZoneObj.coordinates.lng !== '' && (
+                <a
+                  href={`https://www.google.com/maps/dir/?api=1&destination=${selectedZoneObj.coordinates.lat},${selectedZoneObj.coordinates.lng}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-salama-teal dark:text-salama-orange hover:underline flex items-center gap-1 font-semibold"
+                >
+                  <span>Directions</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              )}
+            </div>
+          </div>
+
+          {/* Branch-specific map embeds replace the former decorative map. */}
+          <div className="hidden">
             
             {/* SVG Visual Stylized Tanzania Map */}
             <div className="relative w-full h-80 sm:h-96 flex items-center justify-center">
@@ -483,8 +532,8 @@ export default function ContactsPage() {
                 it immediately to our 24/7 dedicated medical surveillance unit.
               </p>
               <div className="space-y-1.5 text-xs text-slate-700 dark:text-slate-200 font-semibold pt-1">
-                <p>24/7 Safety Hotline: +255 754 000 999</p>
-                <p>Safety Email: safety@salama.co.tz</p>
+                <p>24/7 Safety Hotline: {contactInfo.emergencyHotline || '+255 754 000 999'}</p>
+                <p>Safety Email: {contactInfo.safetyEmail || 'safety@salama.co.tz'}</p>
               </div>
             </div>
 
@@ -496,15 +545,15 @@ export default function ContactsPage() {
               <div className="space-y-3 text-xs text-slate-600 dark:text-slate-300">
                 <p className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-salama-teal dark:text-salama-orange" />
-                  <span>+255 22 286 4500</span>
+                  <span>{contactInfo.supportPhone || '+255 22 286 4500'}</span>
                 </p>
                 <p className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-salama-teal dark:text-salama-orange" />
-                  <span>info@salama.co.tz</span>
+                  <span>{contactInfo.centralEmail || 'info@salama.co.tz'}</span>
                 </p>
                 <p className="flex items-start gap-2.5">
                   <MapPin className="w-4 h-4 text-salama-teal dark:text-salama-orange mt-0.5" />
-                  <span>Plot 45/47, Nyerere Road Industrial Area, P.O. Box 71822, Dar es Salaam, Tanzania</span>
+                  <span>{headquarters?.address || 'Dar es Salaam, Tanzania'}</span>
                 </p>
               </div>
             </div>

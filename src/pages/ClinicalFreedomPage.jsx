@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import ContentImage from '../components/ContentImage';
 import {
   Stethoscope,
   ShieldCheck,
@@ -13,7 +14,8 @@ import {
 } from 'lucide-react';
 
 export default function ClinicalFreedomPage() {
-  const { navigate } = useApp();
+  const { navigate, siteContent } = useApp();
+  const aboutPage = siteContent.aboutPage || {};
 
   return (
     <div className="space-y-16 pb-20">
@@ -95,15 +97,11 @@ export default function ClinicalFreedomPage() {
 
           <div className="lg:col-span-6">
             <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl">
-              <img
-                src="/assets/slides/slide-07.webp"
+              <ContentImage
+                src={aboutPage.clinicalFreedomImageUrl}
                 alt="Doctor examining child patient in Tanzanian clinic - freedom to choose"
-                width="1755"
-                height="1241"
                 className="w-full h-auto object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = '/assets/slides/slide-07.jpg';
-                }}
+                placeholderClass="w-full aspect-[1755/1241]"
               />
               <div className="p-6 bg-slate-900 text-white">
                 <p className="text-xs font-bold text-salama-orange uppercase tracking-wider">
@@ -147,15 +145,11 @@ export default function ClinicalFreedomPage() {
             </div>
 
             <div className="rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-lg">
-              <img
-                src="/assets/slides/slide-09.webp"
+              <ContentImage
+                src={aboutPage.clinicalEducationImageUrl}
                 alt="Doctor and young patient smiling - Patients come first"
-                width="1755"
-                height="1241"
                 className="w-full h-auto object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = '/assets/slides/slide-09.jpg';
-                }}
+                placeholderClass="w-full aspect-[1755/1241]"
               />
             </div>
 

@@ -9,7 +9,9 @@ export default function SEOHead({
   ogImage = '/assets/brand/salama-logo.png',
   schemaData = null
 }) {
-  const { siteContent } = useApp();
+  const { siteContent, zones } = useApp();
+  const contactInfo = siteContent?.contactInfo || {};
+  const headquarters = zones.find((zone) => zone.isHeadquarters) || zones[0];
 
   const siteTitle = 'Salama Pharmaceuticals | Empowering Choices for Healthier Life';
   const fullTitle = title ? `${title} | Salama Pharmaceuticals` : siteTitle;
@@ -88,21 +90,21 @@ export default function SEOHead({
       },
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Plot 45/47, Nyerere Road Industrial Area',
-        addressLocality: 'Dar es Salaam',
+        streetAddress: headquarters?.address || 'Dar es Salaam, Tanzania',
+        addressLocality: headquarters?.hqCity || 'Dar es Salaam',
         addressCountry: 'TZ'
       },
       contactPoint: [
         {
           '@type': 'ContactPoint',
-          telephone: '+255 22 286 4500',
+          telephone: contactInfo.supportPhone || '+255 22 286 4500',
           contactType: 'customer service',
           areaServed: 'TZ',
           availableLanguage: ['English', 'Swahili']
         },
         {
           '@type': 'ContactPoint',
-          telephone: '+255 754 000 999',
+          telephone: contactInfo.emergencyHotline || '+255 754 000 999',
           contactType: 'emergency',
           contactOption: 'Pharmacovigilance & Medical Safety Hotline',
           availableLanguage: ['English', 'Swahili']

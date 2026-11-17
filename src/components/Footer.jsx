@@ -61,6 +61,7 @@ export default function Footer() {
   };
 
   const social = siteContent?.socialLinks || {};
+  const contactInfo = siteContent?.contactInfo || {};
 
   return (
     <footer className="bg-slate-950 text-slate-300 border-t border-slate-800 transition-colors pt-16 pb-12">
@@ -316,11 +317,11 @@ export default function Footer() {
             <div className="pt-2 text-xs text-slate-400 space-y-1">
               <p className="flex items-center gap-2">
                 <Phone className="w-3.5 h-3.5 text-salama-orange" />
-                <span>+255 22 286 4500</span>
+                <span>{contactInfo.supportPhone || '+255 22 286 4500'}</span>
               </p>
               <p className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-salama-orange" />
-                <span>info@salama.co.tz</span>
+                <span>{contactInfo.centralEmail || 'info@salama.co.tz'}</span>
               </p>
             </div>
           </div>
@@ -332,7 +333,7 @@ export default function Footer() {
             <ShieldAlert className="w-4 h-4 text-salama-orange flex-shrink-0" />
             <span>
               <strong>Pharmacovigilance Alert:</strong> Suspected adverse drug reactions or quality defects must be
-              reported to <strong>safety@salama.co.tz</strong> or 24/7 Hotline <strong>+255 754 000 999</strong>.
+              reported to <strong>{contactInfo.safetyEmail || 'safety@salama.co.tz'}</strong> or 24/7 Hotline <strong>{contactInfo.emergencyHotline || '+255 754 000 999'}</strong>.
             </span>
           </div>
           <button

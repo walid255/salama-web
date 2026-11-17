@@ -1,6 +1,7 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import ContentImage from '../components/ContentImage';
 import {
   Building2,
   Award,
@@ -17,7 +18,8 @@ import {
 } from 'lucide-react';
 
 export default function AboutPage() {
-  const { navigate } = useApp();
+  const { navigate, siteContent } = useApp();
+  const about = siteContent.aboutPage || {};
 
   return (
     <div className="space-y-16 pb-20">
@@ -37,11 +39,10 @@ export default function AboutPage() {
           </div>
           {/* Strictly 1 h1 tag on the page */}
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight max-w-3xl leading-tight">
-            With Deep Roots in Tanzania, We’re Shaping the Future of Pharma
+            {about.headline || 'With Deep Roots in Tanzania, We’re Shaping the Future of Pharma'}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-emerald-100 max-w-2xl leading-relaxed">
-            For four decades, Salama has been a steadfast healthcare partner across Tanzania. Built on trust,
-            enduring relationships, and a mission to empower doctors and serve communities.
+            {about.intro || 'For four decades, Salama has been a steadfast healthcare partner across Tanzania. Built on trust, enduring relationships, and a mission to empower doctors and serve communities.'}
           </p>
         </div>
       </section>
@@ -96,26 +97,11 @@ export default function AboutPage() {
               Our 40-Year Heritage
             </span>
             <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              A History of Trust, Clinical Commitment and Patient Focus
+              {about.storyHeading || 'A History of Trust, Clinical Commitment and Patient Focus'}
             </h2>
 
             <div className="space-y-4 text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
-              <p>
-                Founded four decades ago, Salama Pharmaceuticals began with a singular focus: ensuring that essential,
-                high-quality medications were reliably accessible to the people of Tanzania. Over the years, that commitment
-                has evolved into a comprehensive healthcare enterprise.
-              </p>
-              <p>
-                Today, Salama serves as an indispensable bridge between world-class pharmaceutical manufacturing
-                and the everyday clinical needs of Tanzanian doctors, nurses, and patients. We work alongside the Ministry
-                of Health, the Medical Stores Department (MSD), faith-based mission facilities, and the private healthcare
-                sector to eliminate medicine stock-outs.
-              </p>
-              <p>
-                Our portfolio encompasses over 100 registered molecules approved by the Tanzania Medicines and Medical
-                Devices Authority (TMDA), spanning lifesaving antibiotics, cardiovascular agents, diabetes therapies,
-                ophthalmic solutions, and topical analgesics.
-              </p>
+              {(about.storyParagraphs || []).map((paragraph, index) => <p key={index}>{paragraph}</p>)}
             </div>
 
             <div className="grid grid-cols-2 gap-4 pt-2">
@@ -132,15 +118,11 @@ export default function AboutPage() {
 
           <div className="lg:col-span-6">
             <div className="rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl relative">
-              <img
-                src="/assets/slides/slide-10.webp"
-                alt="Salama clinical doctor with stethoscope - What Doctors Can Expect"
-                width="1755"
-                height="1241"
+              <ContentImage
+                src={about.storyImageUrl}
+                alt={about.storyImageAlt || 'Salama clinical doctor with stethoscope - What Doctors Can Expect'}
                 className="w-full h-auto object-cover"
-                onError={(e) => {
-                  e.currentTarget.src = '/assets/slides/slide-10.jpg';
-                }}
+                placeholderClass="w-full aspect-[1755/1241]"
               />
               <div className="p-6 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">
@@ -183,35 +165,17 @@ export default function AboutPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            {(about.values || []).map((value, index) => (
+            <div key={value.title || index} className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
               <div className="w-12 h-12 rounded-xl bg-salama-teal/10 text-salama-teal dark:text-salama-orange flex items-center justify-center">
-                <HeartPulse className="w-6 h-6" />
+                {index === 0 ? <HeartPulse className="w-6 h-6" /> : index === 1 ? <Stethoscope className="w-6 h-6" /> : <ShieldCheck className="w-6 h-6" />}
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Patients First</h3>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white">{value.title}</h3>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                Every commercial decision is evaluated by one metric: does it improve patient outcomes and alleviate suffering in our community?
+                {value.description}
               </p>
             </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-orange-100 dark:bg-orange-950/40 text-salama-orange flex items-center justify-center">
-                <Stethoscope className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Clinical Autonomy</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                We believe doctors must have the freedom to choose the right drug, for the right patient, at the right time, without artificial market barriers.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 flex items-center justify-center">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-white">Uncompromising Quality</h3>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-                WHO-GMP compliance, rigorous batch analysis, TMDA validation, and climate-controlled GDP transport without exception.
-              </p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -226,25 +190,15 @@ export default function AboutPage() {
                 Future Vision
               </span>
               <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                Where We’re Headed: “We’re just getting started.”
+                {about.visionHeading || 'Where We’re Headed: “We’re just getting started.”'}
               </h2>
               <div className="space-y-3 text-sm text-emerald-100">
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-salama-orange flex-shrink-0 mt-0.5" />
-                  <span><strong>Expanding Therapeutic Coverage:</strong> Broadening oncology, critical care, and pediatric formulations.</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-salama-orange flex-shrink-0 mt-0.5" />
-                  <span><strong>Investing in New Molecules:</strong> Introducing modern therapies that address tomorrow's clinical challenges.</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-salama-orange flex-shrink-0 mt-0.5" />
-                  <span><strong>Strengthening National Supply Chains:</strong> Upgrading digital warehousing and faster cold-chain logistics across all 5 zones.</span>
-                </div>
-                <div className="flex items-start gap-3">
-                  <CheckCircle2 className="w-5 h-5 text-salama-orange flex-shrink-0 mt-0.5" />
-                  <span><strong>Deepening Healthcare Partnerships:</strong> Working alongside clinicians, hospitals, and national health authorities.</span>
-                </div>
+                {(about.visionPoints || []).map((point, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-salama-orange flex-shrink-0 mt-0.5" />
+                    <span>{point}</span>
+                  </div>
+                ))}
               </div>
               <div className="pt-2">
                 <button
@@ -258,15 +212,11 @@ export default function AboutPage() {
 
             <div className="lg:col-span-5">
               <div className="rounded-2xl overflow-hidden border border-emerald-700/60 shadow-xl">
-                <img
-                  src="/assets/slides/slide-23.webp"
+                <ContentImage
+                  src={about.visionImageUrl}
                   alt="Where Salama Pharmaceuticals is Headed in Tanzania"
-                  width="1755"
-                  height="1241"
                   className="w-full h-auto object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = '/assets/slides/slide-23.jpg';
-                  }}
+                  placeholderClass="w-full aspect-[1755/1241]"
                 />
               </div>
             </div>

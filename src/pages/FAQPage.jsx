@@ -15,13 +15,14 @@ import {
 } from 'lucide-react';
 
 export default function FAQPage() {
-  const { faqs, copyToClipboard, navigate } = useApp();
+  const { faqs, siteContent, copyToClipboard, navigate } = useApp();
+  const faqPage = siteContent.faqPage || {};
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [openFaqIds, setOpenFaqIds] = useState(['faq-1', 'faq-3']); // First and third open by default
 
-  const categories = ['All', 'Regulatory & Quality', 'Distribution & Logistics', 'Hospital Procurement', 'Clinical Autonomy', 'Pharmacovigilance', 'Ordering & Verification'];
+  const categories = ['All', ...new Set(faqs.map((faq) => faq.category).filter(Boolean))];
 
   const toggleFaq = (id) => {
     setOpenFaqIds((prev) =>
@@ -73,11 +74,10 @@ export default function FAQPage() {
           </div>
           {/* Strictly 1 h1 tag on the page */}
           <h1 className="text-3xl sm:text-5xl font-black tracking-tight max-w-3xl leading-tight">
-            Frequently Asked Questions
+            {faqPage.title || 'Frequently Asked Questions'}
           </h1>
           <p className="mt-4 text-base sm:text-lg text-emerald-100 max-w-2xl leading-relaxed">
-            Find immediate answers regarding TMDA molecule registration, MSD partnership, Good Distribution Practice
-            (GDP) cold chain, and institutional order procedures.
+            {faqPage.description || 'Find immediate answers regarding TMDA molecule registration, MSD partnership, Good Distribution Practice (GDP) cold chain, and institutional order procedures.'}
           </p>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
 import SEOHead from '../components/SEOHead';
+import ContentImage from '../components/ContentImage';
 import {
   Search,
   Filter,
@@ -20,6 +21,7 @@ import {
 export default function CatalogPage() {
   const {
     products,
+    siteContent,
     activeProductSlug,
     setActiveProductSlug,
     navigate,
@@ -31,6 +33,7 @@ export default function CatalogPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedForm, setSelectedForm] = useState('All');
   const [activeProduct, setActiveProduct] = useState(null);
+  const catalogPage = siteContent.catalogPage || {};
 
   // Sync active product modal from activeProductSlug or deep URL
   useEffect(() => {
@@ -45,25 +48,10 @@ export default function CatalogPage() {
   }, [activeProductSlug, products]);
 
   // Categories list
-  const categories = [
-    'All',
-    'Antibiotics & Infectious Diseases',
-    'Cardiovascular & Renal',
-    'Diabetes & Endocrinology',
-    'Pain & Anti-inflammatory',
-    'Ophthalmology',
-    'Antifungals'
-  ];
+  const categories = ['All', ...new Set(products.map((product) => product.category).filter(Boolean))];
 
   // Dosage forms
-  const dosageForms = [
-    'All',
-    'Tablets',
-    'Injection',
-    'Oral Suspension',
-    'Eye Drops',
-    'Topical Gel'
-  ];
+  const dosageForms = ['All', ...new Set(products.map((product) => product.dosageForm).filter(Boolean))];
 
   // Filtering
   const filteredProducts = products.filter((p) => {
@@ -136,11 +124,10 @@ export default function CatalogPage() {
           </div>
           {/* Strictly 1 h1 tag on the page */}
           <h1 className="text-3xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tight">
-            Pharmaceutical Catalog & Molecule Directory
+            {catalogPage.title || 'Pharmaceutical Catalog & Molecule Directory'}
           </h1>
           <p className="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
-            Every molecule is registered with TMDA, manufactured under WHO-GMP compliance, and stocked across our
-            5 nationwide zonal distribution centers.
+            {catalogPage.description || 'Every molecule is registered with TMDA, manufactured under WHO-GMP compliance, and stocked across our 5 nationwide zonal distribution centers.'}
           </p>
         </div>
       </section>
@@ -266,13 +253,11 @@ export default function CatalogPage() {
                 <div>
                   {/* Image container */}
                   <div className="relative w-full h-52 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-800/50 dark:to-slate-800 flex items-center justify-center p-4 overflow-hidden">
-                    <img
+                    <ContentImage
                       src={product.image}
                       alt={product.name}
-                      width="400"
-                      height="300"
                       className="max-h-full max-w-full object-contain transform transition-transform duration-300 group-hover:scale-105"
-                      loading="lazy"
+                      placeholderClass="h-52 w-full rounded-2xl"
                     />
                     <div className="absolute top-3 left-3">
                       <span className="px-2.5 py-1 rounded-md bg-salama-teal text-white text-[10px] font-bold tracking-wider uppercase">
@@ -371,10 +356,11 @@ export default function CatalogPage() {
                 
                 {/* Left Product Image */}
                 <div className="md:col-span-5 rounded-2xl bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-800/60 dark:to-slate-800 p-6 flex items-center justify-center border border-slate-200 dark:border-slate-700">
-                  <img
+                  <ContentImage
                     src={activeProduct.image}
                     alt={activeProduct.name}
                     className="max-h-64 object-contain"
+                    placeholderClass="min-h-64 w-full rounded-2xl"
                   />
                 </div>
 
